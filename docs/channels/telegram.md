@@ -840,7 +840,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
     - group context history uses `channels.telegram.historyLimit` or `messages.groupChat.historyLimit` (default 50); `0` disables.
     - reply/quote/forward supplemental context normalizes into one selected conversation context window when the gateway has observed the parent messages; the observed-message cache lives in OpenClaw SQLite plugin state, and `openclaw doctor --fix` imports legacy sidecars. Telegram only includes one shallow `reply_to_message` per update, so chains older than the cache are limited to that payload.
     - Telegram allowlists primarily gate who can trigger the agent, not a full supplemental-context redaction boundary.
-    - DM history: `channels.telegram.dmHistoryLimit`, `channels.telegram.dms["<user_id>"].historyLimit`.
+    - DM history: `channels.telegram.dmHistoryLimit`, `channels.telegram.dms["<user_id>"].historyLimit`. An existing unthreaded private DM session already carries its history through the persistent session transcript, so its turns do not receive a supplemental conversation context window; only delivered Cron context the session cannot see is merged in. Fresh DMs, replies, topics, and groups keep their windows.
 
     CLI and message-tool send targets accept a numeric chat ID, username, or forum topic target:
 

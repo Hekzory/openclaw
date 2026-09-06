@@ -126,6 +126,8 @@ export type SessionRecentConversationText = {
   text: string;
   timestamp?: number;
   sourceChannel?: string;
+  /** Set on OpenClaw-authored rows the provider context filters out (direct Cron delivery mirrors). */
+  transcriptOnly?: true;
 };
 
 type ReadRecentSessionConversationTextOptions = {
@@ -232,11 +234,9 @@ function parseRecentConversationText(
     !Array.isArray(deliveryMirror) &&
     "kind" in deliveryMirror &&
     deliveryMirror.kind === CRON_DIRECT_DELIVERY_CONTEXT_KIND;
-  if (
-    message.role === "assistant" &&
-    isTranscriptOnlyOpenClawAssistantMessage(message) &&
-    !includeCronDirectDeliveryContext
-  ) {
+  const transcriptOnly =
+    message.role === "assistant" && isTranscriptOnlyOpenClawAssistantMessage(message);
+  if (transcriptOnly && !includeCronDirectDeliveryContext) {
     return undefined;
   }
   const upstreamUserText =
@@ -267,6 +267,7 @@ function parseRecentConversationText(
     ...(typeof provenance?.sourceChannel === "string" && provenance.sourceChannel.trim()
       ? { sourceChannel: provenance.sourceChannel.trim() }
       : {}),
+    ...(transcriptOnly ? { transcriptOnly: true as const } : {}),
   };
 }
 

@@ -134,8 +134,13 @@ export async function mergeSessionTranscriptContext(params: {
       : {}),
     ...(options?.minTimestampMs !== undefined ? { minTimestampMs: options.minTimestampMs } : {}),
   });
+  // A session that already carries its own turns only needs the rows the provider
+  // context filters out of it (direct Cron delivery mirrors); repeating the rest
+  // would hand the model context it already holds.
+  const admittedTurns =
+    options?.sessionTurns === "omit" ? turns.filter((turn) => turn.transcriptOnly === true) : turns;
   const labels = options?.senderLabels ?? { assistant: "Assistant", user: "User" };
-  const transcript = turns.map((turn) => {
+  const transcript = admittedTurns.map((turn) => {
     const item: {
       entry: HistoryEntry;
       role: "assistant" | "user";

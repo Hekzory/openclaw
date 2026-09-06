@@ -548,6 +548,8 @@ export async function buildTelegramInboundContextPayload(params: {
     !visibleReplyTarget;
   // Existing plain DMs already carry their history through the persistent
   // transcript. Keep chat windows for fresh DMs, topics, replies, and groups.
+  // The same fact reaches the core transcript merge below as `sessionTurns`, so
+  // it does not rebuild the dropped window from the session's own transcript.
   const baseVisiblePromptContext = shouldSuppressPersistedDmChatWindowContext
     ? promptContext.filter((entry) => !isTelegramChatWindowPromptContext(entry))
     : promptContext;
@@ -746,6 +748,7 @@ export async function buildTelegramInboundContextPayload(params: {
       beforeTimestampMs: options?.receivedAtMs ?? (msg.date ? msg.date * 1000 : undefined),
       minTimestampMs: options?.promptContextMinTimestampMs,
       senderLabels: { assistant: "OpenClaw", user: "User" },
+      ...(shouldSuppressPersistedDmChatWindowContext ? { sessionTurns: "omit" as const } : {}),
     },
     access: {
       commands: {

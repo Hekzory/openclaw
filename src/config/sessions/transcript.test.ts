@@ -1056,9 +1056,13 @@ describe("appendAssistantMessageToSessionTranscript", () => {
         includeCronDirectDeliveryContext: true,
       }),
     ).resolves.toEqual([
-      expect.objectContaining({ role: "user", text: "ordinary user" }),
-      expect.objectContaining({ role: "assistant", text: "ordinary assistant" }),
-      expect.objectContaining({ role: "assistant", text: "scheduled result" }),
+      expect.not.objectContaining({ transcriptOnly: true }),
+      expect.not.objectContaining({ transcriptOnly: true }),
+      expect.objectContaining({
+        role: "assistant",
+        text: "scheduled result",
+        transcriptOnly: true,
+      }),
     ]);
   });
 

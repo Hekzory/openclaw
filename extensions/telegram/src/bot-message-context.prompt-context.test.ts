@@ -62,6 +62,10 @@ describe("buildTelegramMessageContext prompt context", () => {
 
     expect(ctx?.ctxPayload.SessionKey).toBe("agent:main:main");
     expect(ctx?.ctxPayload.ChannelStructuredContext).toBeUndefined();
+    // The transcript merge must not rebuild the dropped window from the session's own turns.
+    expect(ctx?.ctxPayload.SessionTranscriptContext).toEqual(
+      expect.objectContaining({ chatWindow: true, sessionTurns: "omit" }),
+    );
   });
 
   it("keeps Telegram chat-window context for fresh private DM sessions", async () => {
@@ -75,6 +79,7 @@ describe("buildTelegramMessageContext prompt context", () => {
     });
 
     expect(ctx?.ctxPayload.ChannelStructuredContext).toEqual([telegramChatWindowContext]);
+    expect(ctx?.ctxPayload.SessionTranscriptContext).not.toHaveProperty("sessionTurns");
   });
 
   it("keeps Telegram chat-window context for existing private DM replies", async () => {
@@ -99,6 +104,7 @@ describe("buildTelegramMessageContext prompt context", () => {
     });
 
     expect(ctx?.ctxPayload.ChannelStructuredContext).toEqual([telegramChatWindowContext]);
+    expect(ctx?.ctxPayload.SessionTranscriptContext).not.toHaveProperty("sessionTurns");
   });
 
   it("honors per-turn zero DM history while preserving the current reply target", async () => {

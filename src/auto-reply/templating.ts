@@ -58,6 +58,13 @@ export type SessionTranscriptContext = {
   beforeTimestampMs?: number;
   minTimestampMs?: number;
   senderLabels?: { assistant: string; user: string };
+  /**
+   * "omit" when the routed session already carries this conversation's own user and
+   * assistant turns (an existing persistent direct-message session). Core then merges
+   * only transcript rows the provider context filters out of that session, such as
+   * direct Cron delivery mirrors, instead of re-injecting turns the session already has.
+   */
+  sessionTurns?: "omit";
 };
 
 /** @deprecated Use ChannelStructuredContextEntry. Removal: after 2026-09-08 (see sdk-untrusted-context-identifier-aliases). */

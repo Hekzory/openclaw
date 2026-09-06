@@ -93,6 +93,65 @@ describe("session transcript inbound context", () => {
     ]);
   });
 
+  it("merges only marked Cron delivery context when the session already owns its turns", async () => {
+    readRecent.mockImplementation(async (params) => [
+      { id: "u1", role: "user", text: "earlier question", timestamp: 1_000 },
+      { id: "a1", role: "assistant", text: "earlier answer", timestamp: 2_000 },
+      ...(params.includeCronDirectDeliveryContext
+        ? [
+            {
+              id: "cron-1",
+              role: "assistant" as const,
+              text: "scheduled payload",
+              timestamp: 3_000,
+              transcriptOnly: true as const,
+            },
+          ]
+        : []),
+    ]);
+    const ctx = context({
+      SessionTranscriptContext: { chatWindow: true, historyLimit: 3, sessionTurns: "omit" },
+    });
+
+    await mergeSessionTranscriptContext({
+      agentId: "main",
+      ctx,
+      sessionKey: ctx.SessionKey!,
+      storePath: "/tmp/sessions.json",
+    });
+
+    expect(ctx.ChannelStructuredContext).toEqual([
+      expect.objectContaining({
+        source: "session",
+        type: "chat_window",
+        payload: expect.objectContaining({
+          messages: [expect.objectContaining({ body: "scheduled payload" })],
+        }),
+      }),
+    ]);
+    expect(ctx.InboundHistory).toBeUndefined();
+  });
+
+  it("adds no window when the session owns its turns and nothing else is marked", async () => {
+    readRecent.mockResolvedValue([
+      { id: "u1", role: "user", text: "earlier question", timestamp: 1_000 },
+      { id: "a1", role: "assistant", text: "earlier answer", timestamp: 2_000 },
+    ]);
+    const ctx = context({
+      SessionTranscriptContext: { chatWindow: true, historyLimit: 3, sessionTurns: "omit" },
+    });
+
+    await mergeSessionTranscriptContext({
+      agentId: "main",
+      ctx,
+      sessionKey: ctx.SessionKey!,
+      storePath: "/tmp/sessions.json",
+    });
+
+    expect(ctx.ChannelStructuredContext).toBeUndefined();
+    expect(ctx.InboundHistory).toBeUndefined();
+  });
+
   it("dedupes the canonical turn against the live window and merges chronologically", async () => {
     readRecent.mockResolvedValue([
       { id: "u1", role: "user", text: "cached user turn", timestamp: 1_000 },

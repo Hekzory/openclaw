@@ -1,0 +1,95 @@
+{
+  "label": "fixed",
+  "scenario": "accept-then-reset",
+  "nonce": "fixed-mtq6b7x2",
+  "transport": "grammY Bot API HTTPS via CONNECT through a local HTTP proxy (channels.telegram.proxy)",
+  "botApiHost": "api.telegram.org",
+  "timeline": [
+    {
+      "step": "staged",
+      "at": "2026-09-06T18:57:02.212Z",
+      "stagedStatus": "failed",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": null,
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "rowColumns": [
+        "queue_name",
+        "id",
+        "status",
+        "entry_kind",
+        "session_key",
+        "channel",
+        "target",
+        "account_id",
+        "retry_count",
+        "last_attempt_at",
+        "last_error",
+        "recovery_state",
+        "platform_send_started_at",
+        "entry_json",
+        "enqueued_at",
+        "updated_at",
+        "failed_at"
+      ],
+      "connects": 0
+    },
+    {
+      "step": "pass1-accepted-then-reset",
+      "at": "2026-09-06T18:57:02.326Z",
+      "proxyMode": "accept-then-reset",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": "unknown_after_send",
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "connectsSoFar": 1,
+      "connectErrorsSoFar": 1
+    },
+    {
+      "step": "pass2-healthy",
+      "at": "2026-09-06T18:57:02.352Z",
+      "proxyMode": "accept-then-reset",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": "unknown_after_send",
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "connectsSoFar": 1,
+      "connectErrorsSoFar": 1
+    }
+  ],
+  "proxyConnects": [
+    {
+      "at": "2026-09-06T18:57:02.314Z",
+      "mode": "accept-then-reset",
+      "target": "api.telegram.org:443",
+      "outcome": "200 Connection Established, then socket destroyed before TLS"
+    }
+  ],
+  "undiciConnectErrors": [
+    {
+      "at": "2026-09-06T18:57:02.318Z",
+      "name": "Error",
+      "code": "ECONNRESET",
+      "message": "Client network socket disconnected before secure TLS connection was established"
+    }
+  ],
+  "adapterResults": [],
+  "drainLog": [
+    {
+      "at": "2026-09-06T18:57:02.325Z",
+      "level": "warn",
+      "text": "live probe control pass 1 (tunnel accepted, socket reset): retry failed for entry telegram-live-proxy-probe-fixed-mtq6b7x2: Network request for 'sendMessage' failed!"
+    },
+    {
+      "at": "2026-09-06T18:57:02.326Z",
+      "level": "warn",
+      "text": "Delivery entry telegram-live-proxy-probe-fixed-mtq6b7x2 partially sent before recovery failed; preserving unknown_after_send"
+    }
+  ]
+}

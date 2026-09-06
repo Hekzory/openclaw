@@ -1,0 +1,196 @@
+{
+  "label": "fixed2",
+  "scenario": "refuse-then-recover",
+  "nonce": "fixed2-mtq6cjrs",
+  "transport": "grammY Bot API HTTPS via CONNECT through a local HTTP proxy (channels.telegram.proxy)",
+  "botApiHost": "api.telegram.org",
+  "timeline": [
+    {
+      "step": "staged",
+      "at": "2026-09-06T18:58:04.357Z",
+      "stagedStatus": "failed",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": null,
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "rowColumns": [
+        "queue_name",
+        "id",
+        "status",
+        "entry_kind",
+        "session_key",
+        "channel",
+        "target",
+        "account_id",
+        "retry_count",
+        "last_attempt_at",
+        "last_error",
+        "recovery_state",
+        "platform_send_started_at",
+        "entry_json",
+        "enqueued_at",
+        "updated_at",
+        "failed_at"
+      ],
+      "connects": 0
+    },
+    {
+      "step": "pass1-refused",
+      "at": "2026-09-06T18:58:06.450Z",
+      "proxyMode": "refuse",
+      "row": {
+        "status": "pending",
+        "retryCount": 2,
+        "recoveryState": null,
+        "lastError": "Telegram request not started | Network request for 'sendMessage' failed! | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "connectsSoFar": 3,
+      "connectErrorsSoFar": 3
+    },
+    {
+      "step": "pass2-refused-after-restart",
+      "at": "2026-09-06T18:58:09.446Z",
+      "proxyMode": "refuse",
+      "row": {
+        "status": "pending",
+        "retryCount": 3,
+        "recoveryState": null,
+        "lastError": "Telegram request not started | Network request for 'sendMessage' failed! | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "connectsSoFar": 6,
+      "connectErrorsSoFar": 6
+    },
+    {
+      "step": "pass3-recovered",
+      "at": "2026-09-06T18:58:10.687Z",
+      "proxyMode": "forward",
+      "row": {
+        "status": "completed",
+        "retryCount": 0,
+        "recoveryState": "completed_bounded",
+        "lastError": null
+      },
+      "connectsSoFar": 7,
+      "connectErrorsSoFar": 6
+    }
+  ],
+  "proxyConnects": [
+    {
+      "at": "2026-09-06T18:58:04.452Z",
+      "mode": "refuse",
+      "target": "api.telegram.org:443",
+      "outcome": "503 Service Unavailable (tunnel refused)"
+    },
+    {
+      "at": "2026-09-06T18:58:05.442Z",
+      "mode": "refuse",
+      "target": "api.telegram.org:443",
+      "outcome": "503 Service Unavailable (tunnel refused)"
+    },
+    {
+      "at": "2026-09-06T18:58:06.443Z",
+      "mode": "refuse",
+      "target": "api.telegram.org:443",
+      "outcome": "503 Service Unavailable (tunnel refused)"
+    },
+    {
+      "at": "2026-09-06T18:58:07.444Z",
+      "mode": "refuse",
+      "target": "api.telegram.org:443",
+      "outcome": "503 Service Unavailable (tunnel refused)"
+    },
+    {
+      "at": "2026-09-06T18:58:08.443Z",
+      "mode": "refuse",
+      "target": "api.telegram.org:443",
+      "outcome": "503 Service Unavailable (tunnel refused)"
+    },
+    {
+      "at": "2026-09-06T18:58:09.442Z",
+      "mode": "refuse",
+      "target": "api.telegram.org:443",
+      "outcome": "503 Service Unavailable (tunnel refused)"
+    },
+    {
+      "at": "2026-09-06T18:58:10.442Z",
+      "mode": "forward",
+      "target": "api.telegram.org:443",
+      "outcome": "200 Connection Established (tunneled to upstream)"
+    }
+  ],
+  "undiciConnectErrors": [
+    {
+      "at": "2026-09-06T18:58:04.454Z",
+      "name": "AbortError",
+      "code": "UND_ERR_ABORTED",
+      "message": "Proxy response (503) !== 200 when HTTP Tunneling"
+    },
+    {
+      "at": "2026-09-06T18:58:05.443Z",
+      "name": "AbortError",
+      "code": "UND_ERR_ABORTED",
+      "message": "Proxy response (503) !== 200 when HTTP Tunneling"
+    },
+    {
+      "at": "2026-09-06T18:58:06.444Z",
+      "name": "AbortError",
+      "code": "UND_ERR_ABORTED",
+      "message": "Proxy response (503) !== 200 when HTTP Tunneling"
+    },
+    {
+      "at": "2026-09-06T18:58:07.444Z",
+      "name": "AbortError",
+      "code": "UND_ERR_ABORTED",
+      "message": "Proxy response (503) !== 200 when HTTP Tunneling"
+    },
+    {
+      "at": "2026-09-06T18:58:08.443Z",
+      "name": "AbortError",
+      "code": "UND_ERR_ABORTED",
+      "message": "Proxy response (503) !== 200 when HTTP Tunneling"
+    },
+    {
+      "at": "2026-09-06T18:58:09.443Z",
+      "name": "AbortError",
+      "code": "UND_ERR_ABORTED",
+      "message": "Proxy response (503) !== 200 when HTTP Tunneling"
+    }
+  ],
+  "adapterResults": [],
+  "drainLog": [
+    {
+      "at": "2026-09-06T18:58:06.448Z",
+      "level": "warn",
+      "text": "live probe pass 1 (proxy refusing CONNECT): retry failed for entry telegram-live-proxy-probe-fixed2-mtq6cjrs: Telegram request not started | Network request for 'sendMessage' failed! | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+    },
+    {
+      "at": "2026-09-06T18:58:09.445Z",
+      "level": "warn",
+      "text": "live probe pass 2 after restart (proxy still refusing): retry failed for entry telegram-live-proxy-probe-fixed2-mtq6cjrs: Telegram request not started | Network request for 'sendMessage' failed! | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+    },
+    {
+      "at": "2026-09-06T18:58:10.687Z",
+      "level": "info",
+      "text": "live probe pass 3 (proxy recovered): drained delivery telegram-live-proxy-probe-fixed2-mtq6cjrs on telegram"
+    }
+  ],
+  "messageSentEvents": [
+    {
+      "at": "2026-09-06T18:58:10.687Z",
+      "event": {
+        "to": "<chat-id>",
+        "content": "[openclaw live probe fixed2-mtq6cjrs] scenario=refuse-then-recover — this reply was queued while the HTTP proxy refused the CONNECT tunnel",
+        "success": true,
+        "messageId": "801"
+      },
+      "ctx": {
+        "channelId": "telegram",
+        "accountId": "default",
+        "conversationId": "<chat-id>",
+        "messageId": "801"
+      }
+    }
+  ]
+}

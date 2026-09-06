@@ -1,0 +1,108 @@
+{
+  "label": "stock",
+  "scenario": "refuse-then-recover",
+  "nonce": "stock-mtq6aino",
+  "transport": "grammY Bot API HTTPS via CONNECT through a local HTTP proxy (channels.telegram.proxy)",
+  "botApiHost": "api.telegram.org",
+  "timeline": [
+    {
+      "step": "staged",
+      "at": "2026-09-06T18:56:29.407Z",
+      "stagedStatus": "failed",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": null,
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "rowColumns": [
+        "queue_name",
+        "id",
+        "status",
+        "entry_kind",
+        "session_key",
+        "channel",
+        "target",
+        "account_id",
+        "retry_count",
+        "last_attempt_at",
+        "last_error",
+        "recovery_state",
+        "platform_send_started_at",
+        "entry_json",
+        "enqueued_at",
+        "updated_at",
+        "failed_at"
+      ],
+      "connects": 0
+    },
+    {
+      "step": "pass1-refused",
+      "at": "2026-09-06T18:56:29.515Z",
+      "proxyMode": "refuse",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": "unknown_after_send",
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "connectsSoFar": 1,
+      "connectErrorsSoFar": 1
+    },
+    {
+      "step": "pass2-refused-after-restart",
+      "at": "2026-09-06T18:56:29.540Z",
+      "proxyMode": "refuse",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": "unknown_after_send",
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "connectsSoFar": 1,
+      "connectErrorsSoFar": 1
+    },
+    {
+      "step": "pass3-recovered",
+      "at": "2026-09-06T18:56:29.556Z",
+      "proxyMode": "refuse",
+      "row": {
+        "status": "pending",
+        "retryCount": 1,
+        "recoveryState": "unknown_after_send",
+        "lastError": "staged before transport for live probe | proxy still refusing | OPENCLAW_PLATFORM_MESSAGE_NOT_DISPATCHED"
+      },
+      "connectsSoFar": 1,
+      "connectErrorsSoFar": 1
+    }
+  ],
+  "proxyConnects": [
+    {
+      "at": "2026-09-06T18:56:29.504Z",
+      "mode": "refuse",
+      "target": "api.telegram.org:443",
+      "outcome": "503 Service Unavailable (tunnel refused)"
+    }
+  ],
+  "undiciConnectErrors": [
+    {
+      "at": "2026-09-06T18:56:29.506Z",
+      "name": "AbortError",
+      "code": "UND_ERR_ABORTED",
+      "message": "Proxy response (503) !== 200 when HTTP Tunneling"
+    }
+  ],
+  "adapterResults": [],
+  "drainLog": [
+    {
+      "at": "2026-09-06T18:56:29.514Z",
+      "level": "warn",
+      "text": "live probe pass 1 (proxy refusing CONNECT): retry failed for entry telegram-live-proxy-probe-stock-mtq6aino: Network request for 'sendMessage' failed!"
+    },
+    {
+      "at": "2026-09-06T18:56:29.515Z",
+      "level": "warn",
+      "text": "Delivery entry telegram-live-proxy-probe-stock-mtq6aino partially sent before recovery failed; preserving unknown_after_send"
+    }
+  ]
+}
